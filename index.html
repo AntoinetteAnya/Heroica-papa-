@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nota de Pedido - Heroica Papa</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #c0392b;
+    }
+    img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 150px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #d35400;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Heroica Papa Logo" />
+    <h1>Nota de Pedido</h1>
+    <label>Nombre del Cliente:</label>
+    <input type="text" id="cliente" />
+
+    <label>Fecha:</label>
+    <input type="date" id="fecha" />
+
+    <label>Producto Solicitado:</label>
+    <input type="text" id="producto" />
+
+    <label>Cantidad:</label>
+    <input type="number" id="cantidad" />
+
+    <label>Total del Pedido (S/):</label>
+    <input type="number" id="total" />
+
+    <button onclick="generarPDF()">Generar PDF</button>
+  </div>
+
+  <script>
+    async function generarPDF() {
+      const {{ jsPDF }} = window.jspdf;
+      const doc = new jsPDF();
+
+      const cliente = document.getElementById("cliente").value;
+      const fecha = document.getElementById("fecha").value;
+      const producto = document.getElementById("producto").value;
+      const cantidad = document.getElementById("cantidad").value;
+      const total = document.getElementById("total").value;
+
+      doc.setFontSize(18);
+      doc.text("Heroica Papa", 20, 20);
+      doc.setFontSize(12);
+      doc.text("Número de contacto: 914286740", 20, 30);
+      doc.text(`Fecha: ${fecha}`, 20, 40);
+      doc.text(`Cliente: ${cliente}`, 20, 50);
+      doc.text(`Producto: ${producto}`, 20, 60);
+      doc.text(`Cantidad: ${cantidad}`, 20, 70);
+      doc.text(`Total: S/ ${total}`, 20, 80);
+
+      doc.save(`NotaPedido_${cliente}_${fecha}.pdf`);
+    }
+  </script>
+</body>
+</html>
